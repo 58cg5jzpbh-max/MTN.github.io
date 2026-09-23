@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sell Your MTN Card</title>
+<style>
+  :root{
+    --navy:#0b1f3a;
+    --navy-light:#123057;
+    --gold:#ffcb05;
+    --gray:#f4f6f9;
+    --text:#1c2330;
+    --muted:#6b7280;
+    --success:#1a9e5c;
+    --border:#dfe3ea;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif;}
+  body{
+    background:var(--gray);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    background:linear-gradient(135deg,var(--navy),var(--navy-light));
+    color:#fff;
+    padding:28px 20px;
+    text-align:center;
+  }
+  header h1{
+    font-size:24px;
+    letter-spacing:.5px;
+  }
+  header p{
+    margin-top:6px;
+    color:#c6d2e6;
+    font-size:14px;
+  }
+  main{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    padding:30px 16px 60px;
+  }
+  .card{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 8px 28px rgba(11,31,58,.08);
+    width:100%;
+    max-width:460px;
+    padding:28px 24px 30px;
+    border:1px solid var(--border);
+  }
+  .price-box{
+    background:var(--navy);
+    color:#fff;
+    border-radius:10px;
+    padding:14px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+  }
+  .price-box .label{
+    font-size:13px;
+    color:#c6d2e6;
+  }
+  .price-box .value{
+    font-size:22px;
+    font-weight:700;
+    color:var(--gold);
+  }
+  .network-tag{
+    display:inline-block;
+    background:var(--gold);
+    color:var(--navy);
+    font-weight:700;
+    font-size:12px;
+    padding:3px 10px;
+    border-radius:20px;
+    margin-bottom:4px;
+  }
+  form label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin:16px 0 6px;
+    color:var(--navy);
+  }
+  form input, form select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:14px;
+    background:#fbfcfe;
+    outline:none;
+    transition:border .15s;
+  }
+  form input:focus, form select:focus{
+    border-color:var(--navy-light);
+    background:#fff;
+  }
+  .hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  button{
+    width:100%;
+    margin-top:26px;
+    padding:14px;
+    border:none;
+    border-radius:9px;
+    background:var(--navy);
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.3px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    transition:background .15s;
+  }
+  button:hover{background:var(--navy-light);}
+  button svg{width:18px;height:18px;fill:var(--gold);}
+  .note{
+    margin-top:16px;
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.5;
+    text-align:center;
+  }
+  .error{
+    color:#c0392b;
+    font-size:12.5px;
+    margin-top:6px;
+    display:none;
+  }
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:var(--muted);
+    padding:16px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Sell Your Recharge Card</h1>
+  <p>Fast, secure payment straight to your bank account</p>
+</header>
+
+<main>
+  <div class="card">
+    <span class="network-tag">MTN ONLY</span>
+    <div class="price-box">
+      <div>
+        <div class="label">We buy MTN cards at</div>
+      </div>
+      <div class="value">&#8358;500</div>
+    </div>
+
+    <form id="sellForm">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" required placeholder="e.g. John Okafor">
+
+      <label for="phone">Your Phone Number</label>
+      <input type="tel" id="phone" required placeholder="e.g. 08012345678">
+
+      <label for="cardPin">MTN Card PIN / Voucher Number</label>
+      <input type="text" id="cardPin" required placeholder="Enter the recharge card PIN">
+      <div class="hint">Scratch the card and type the number exactly as shown.</div>
+
+      <label for="bankName">Bank Name</label>
+      <input type="text" id="bankName" required placeholder="e.g. Opay, GTBank, Access Bank">
+
+      <label for="accountNumber">Account Number</label>
+      <input type="text" id="accountNumber" required placeholder="10-digit account number" maxlength="10">
+
+      <label for="accountName">Account Name</label>
+      <input type="text" id="accountName" required placeholder="Name on the bank account">
+
+      <div class="error" id="formError">Please fill in every field correctly before submitting.</div>
+
+      <button type="submit">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.09-1.34A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        Submit &amp; Continue on WhatsApp
+      </button>
+    </form>
+
+    <p class="note">
+      After submitting, you'll be redirected to WhatsApp with your details pre-filled.
+      Your payment of &#8358;500 will be sent directly to the bank account you provide.
+    </p>
+  </div>
+</main>
+
+<footer>&copy; <span id="year"></span> Sell Your Card. All submissions go directly to WhatsApp.</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const WHATSAPP_NUMBER = "2349133750885"; // 09133750885 in international format
+
+document.getElementById('sellForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const fullName = document.getElementById('fullName').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const cardPin = document.getElementById('cardPin').value.trim();
+  const bankName = document.getElementById('bankName').value.trim();
+  const accountNumber = document.getElementById('accountNumber').value.trim();
+  const accountName = document.getElementById('accountName').value.trim();
+  const errorBox = document.getElementById('formError');
+
+  if(!fullName || !phone || !cardPin || !bankName || !accountNumber || !accountName){
+    errorBox.style.display = 'block';
+    return;
+  }
+  errorBox.style.display = 'none';
+
+  const message =
+`Hello, I want to sell my MTN recharge card.
+
+Name: ${fullName}
+Phone: ${phone}
+Network: MTN
+Card PIN: ${cardPin}
+Amount: ₦500
+
+Bank Details for Payment:
+Bank Name: ${bankName}
+Account Number: ${accountNumber}
+Account Name: ${accountName}`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.location.href = url;
+});
+</script>
+
+</body>
+</html>
