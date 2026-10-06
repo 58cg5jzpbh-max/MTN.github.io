@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quick Call – free video calls with a link</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
+<style>
+:root{--bg:#f3f1ec;--ink:#1c2530;--mute:#5d6875;--panel:#fff;--line:#d9d5cb;--accent:#e08a00;--accent-ink:#fff;--red:#c93b3b}
+@media(prefers-color-scheme:dark){:root{--bg:#141a21;--ink:#eef0f2;--mute:#9aa5b1;--panel:#1d2631;--line:#2f3b49;--accent:#f2a21f;--accent-ink:#141a21}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Avenir Next","Segoe UI",Roboto,Arial,sans-serif;display:flex;flex-direction:column}
+header{padding:16px 18px 4px}
+h1{margin:0;font-size:1.6rem;letter-spacing:-.02em}
+#info{padding:8px 18px;color:var(--mute)}
+.share{display:flex;gap:8px;padding:0 18px 10px}
+.share input{flex:1;min-width:0;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;font-size:.9rem}
+.stage{flex:1;position:relative;margin:0 18px;background:#0c0f13;border-radius:14px;overflow:hidden;min-height:260px}
+#remote{width:100%;height:100%;object-fit:cover;background:#0c0f13}
+#local{position:absolute;right:10px;bottom:10px;width:28%;max-width:180px;min-width:90px;aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:2px solid rgba(255,255,255,.7);background:#222;transform:scaleX(-1)}
+#wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c9d1d9;text-align:center;padding:20px}
+.controls{display:flex;justify-content:center;gap:10px;padding:14px 18px calc(14px + env(safe-area-inset-bottom,0px))}
+button{font:inherit;font-weight:600;padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+button.on{background:var(--ink);color:var(--bg)}
+button.end{background:var(--red);border-color:var(--red);color:#fff}
+button.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><h1>Quick Call</h1></header>
+<div id="info" role="status" aria-live="polite">Starting camera…</div>
+<div class="share" id="share">
+  <input id="link" readonly placeholder="Your call link will appear here" aria-label="Call link">
+  <button class="main" id="copy" disabled>Copy link</button>
+</div>
+<div class="stage">
+  <video id="remote" autoplay playsinline></video>
+  <div id="wait">Waiting for the other person to join…</div>
+  <video id="local" autoplay playsinline muted></video>
+</div>
+<div class="controls">
+  <button id="mic">Mute</button>
+  <button id="cam">Camera off</button>
+  <button class="end" id="end">Leave</button>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const info = $('info'), remote = $('remote'), local = $('local'), wait = $('wait');
+const roomId = location.hash.slice(1);
+let stream, peer, call;
+
+function setInfo(t){ info.textContent = t; }
+function attach(c){
+  call = c;
+  c.on('stream', s => { remote.srcObject = s; wait.style.display = 'none'; setInfo('Connected.'); });
+  c.on('close', () => { wait.style.display = 'flex'; wait.textContent = 'The other person left.'; setInfo('Call ended.'); });
+  c.on('error', e => setInfo('Call error: ' + e.type));
+}
+
+async function start(){
+  if(roomId){ $('share').style.display = 'none'; }
+  if(!window.Peer){ setInfo('Could not load the call library. Check your internet and refresh.'); return; }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}, audio:true});
+  } catch(e){
+    setInfo('Camera or microphone is blocked. Allow access in your browser, then refresh. (Calls only work on https:// pages.)');
+    return;
+  }
+  local.srcObject = stream;
+
+  if(roomId){
+    peer = new Peer();
+    peer.on('open', () => { setInfo('Calling…'); attach(peer.call(roomId, stream)); });
+  } else {
+    const id = 'qc-' + Math.random().toString(36).slice(2, 10);
+    peer = new Peer(id);
+    peer.on('open', () => {
+      const url = location.href.split('#')[0] + '#' + id;
+      $('link').value = url;
+      $('copy').disabled = false;
+      setInfo('Send this link to the person you want to call, and keep this page open.');
+    });
+    peer.on('call', c => { c.answer(stream); attach(c); });
+  }
+  peer.on('error', e => {
+    if(e.type === 'peer-unavailable') setInfo('This call link is not active. Ask the host to open the page and send a fresh link.');
+    else setInfo('Connection problem: ' + e.type + '. Refresh and try again.');
+  });
+}
+
+$('copy').onclick = async () => {
+  const el = $('link');
+  try { await navigator.clipboard.writeText(el.value); } catch(_){ el.select(); document.execCommand('copy'); }
+  $('copy').textContent = 'Copied';
+  setTimeout(() => $('copy').textContent = 'Copy link', 1800);
+};
+$('mic').onclick = () => {
+  if(!stream) return;
+  const t = stream.getAudioTracks()[0]; t.enabled = !t.enabled;
+  $('mic').textContent = t.enabled ? 'Mute' : 'Unmute';
+  $('mic').classList.toggle('on', !t.enabled);
+};
+$('cam').onclick = () => {
+  if(!stream) return;
+  const t = stream.getVideoTracks()[0]; t.enabled = !t.enabled;
+  $('cam').textContent = t.enabled ? 'Camera off' : 'Camera on';
+  $('cam').classList.toggle('on', !t.enabled);
+};
+$('end').onclick = () => {
+  if(call) call.close();
+  if(peer) peer.destroy();
+  if(stream) stream.getTracks().forEach(t => t.stop());
+  wait.style.display = 'flex'; wait.textContent = 'You left the call. Refresh the page to start a new one.';
+  setInfo('Call ended.');
+};
+start();
+</script>
+</body>
+</html>
