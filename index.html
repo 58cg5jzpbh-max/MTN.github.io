@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quick Call – free video calls</title>
+<style>
+:root{--bg:#f3f1ec;--ink:#1c2530;--mute:#5d6875}
+@media(prefers-color-scheme:dark){:root{--bg:#141a21;--ink:#eef0f2;--mute:#9aa5b1}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Avenir Next","Segoe UI",Roboto,Arial,sans-serif;display:flex;flex-direction:column}
+header{padding:14px 18px 6px}
+h1{margin:0;font-size:1.5rem;letter-spacing:-.02em}
+p{margin:2px 0 0;color:var(--mute);font-size:.92rem}
+#metered-frame{flex:1;width:100%;min-height:70vh;padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Quick Call</h1>
+  <p>Enter your name, join the room, and share this page's address with the person you want to call.</p>
+</header>
+
+<div id="metered-frame"></div>
+
+<script src="https://cdn.metered.ca/sdk/frame/1.4.3/sdk-frame.min.js"></script>
+<script>
+  var frame = new MeteredFrame();
+  frame.init({
+    roomURL: "mycalls-ng-2026.metered.live/divine-video-call",
+  }, document.getElementById("metered-frame"));
+</script>
+</body>
+</html>
