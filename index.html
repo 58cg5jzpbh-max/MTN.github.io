@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>₦100 Giveaway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #F2F5F1;
+  --surface: #FFFFFF;
+  --ink: #12241A;
+  --muted: #53665A;
+  --line: #D3DDD4;
+  --accent: #0A6B3B;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E1F0E6;
+  --warn: #8A5200;
+  --warn-bg: #FBF0DC;
+  --bad: #A52A2A;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1712; --surface: #15221B; --ink: #E8F0EA; --muted: #9CB1A3; --line: #27392E;
+    --accent: #4CC784; --accent-ink: #06150C; --accent-soft: #163325;
+    --warn: #E8B45E; --warn-bg: #2A2111; --bad: #F08A8A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1712; --surface: #15221B; --ink: #E8F0EA; --muted: #9CB1A3; --line: #27392E;
+  --accent: #4CC784; --accent-ink: #06150C; --accent-soft: #163325;
+  --warn: #E8B45E; --warn-bg: #2A2111; --bad: #F08A8A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main, #appView { display: flex; flex-direction: column; gap: 20px; }
+main { max-width: 640px; margin: 0 auto; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+p { margin: 0; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.hero { display: flex; flex-direction: column; gap: 10px; }
+.hero h1 { font-size: clamp(44px, 12vw, 72px); font-weight: 800; letter-spacing: -0.02em; }
+.hero p { color: var(--muted); max-width: 46ch; }
+.meter { display: flex; flex-direction: column; gap: 8px; }
+.meter-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-weight: 600; }
+.meter-row span:last-child { color: var(--muted); font-weight: 500; font-size: 14px; margin-left: auto; text-align: right; }
+.bar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); border-radius: 99px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.card h2 { font-size: 24px; font-weight: 700; }
+.card .sub { color: var(--muted); font-size: 15px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+label { font-size: 14px; font-weight: 600; }
+label small { font-weight: 400; color: var(--muted); }
+input, textarea, select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%; min-width: 0; }
+input:focus-visible, textarea:focus-visible, select:focus-visible, .btn:focus-visible, .tab:focus-visible, .act:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.btn { font: inherit; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; text-align: center; min-height: 48px; padding: 12px 18px; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); text-decoration: none; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+.msg { font-size: 14px; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); color: var(--warn); overflow-wrap: anywhere; }
+.msg.bad { color: var(--bad); background: transparent; border: 1px solid var(--bad); }
+.msg.ok { background: var(--accent-soft); color: var(--accent); }
+.fine { font-size: 13px; color: var(--muted); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--bg); padding: 4px; border-radius: 12px; }
+.tab { font: inherit; font-weight: 600; min-height: 44px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; }
+.tab.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.topbar .who { font-family: var(--font-display); font-weight: 700; font-size: 20px; min-width: 0; overflow-wrap: anywhere; }
+.link { font: inherit; font-weight: 600; background: none; border: 0; color: var(--accent); cursor: pointer; padding: 8px 0; text-decoration: underline; }
+.balance { background: var(--accent); color: var(--accent-ink); border-radius: 16px; padding: 22px 20px; display: flex; flex-direction: column; gap: 4px; }
+.balance .lbl { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; }
+.balance .amt { font-family: var(--font-display); font-weight: 800; font-size: clamp(44px, 13vw, 64px); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.balance .pend { font-size: 14px; font-weight: 600; opacity: 0.92; }
+.actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.act { font: inherit; font-weight: 600; min-height: 52px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; padding: 10px 6px; }
+.act[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.codebox { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; overflow-wrap: anywhere; user-select: all; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row > * { flex: 1 1 160px; }
+.hist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.hist li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.hist li:first-child { border-top: 0; padding-top: 0; }
+.hist .t { font-weight: 600; overflow-wrap: anywhere; }
+.hist .d { grid-column: 1; font-size: 13px; color: var(--muted); }
+.hist .a { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hist .a.plus { color: var(--accent); }
+.hist .a.minus { color: var(--muted); }
+.contact { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+.contact strong { font-variant-numeric: tabular-nums; user-select: all; }
+[hidden] { display: none !important; }
+.dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--accent); vertical-align: middle; }
+.ticker { overflow: hidden; border-block: 1px solid var(--line); padding-block: 10px; }
+.ticker-track { display: flex; width: max-content; }
+.ticker .grp { display: flex; gap: 32px; padding-right: 32px; white-space: nowrap; font-size: 14px; font-weight: 600; color: var(--muted); }
+.ticker .grp span::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 10px; border-radius: 50%; background: var(--accent); vertical-align: middle; }
+@media (prefers-reduced-motion: reduce) { .ticker-track { width: auto; flex-wrap: wrap; } .ticker .grp { flex-wrap: wrap; white-space: normal; } .ticker .grp[aria-hidden="true"] { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .bar > div { position: relative; overflow: hidden; transition: width 1.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .bar > div::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent); transform: translateX(-100%); animation: sheen 2.4s ease-in-out 1.4s infinite; }
+  .dot { animation: pulse 1.6s ease-in-out infinite; }
+  .ticker-track { animation: slide 24s linear infinite; }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  .rise { animation: rise 0.6s ease both; }
+  .rise.d1 { animation-delay: 0.08s; }
+  .rise.d2 { animation-delay: 0.16s; }
+  @keyframes sheen { to { transform: translateX(100%); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(1.5); } }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @keyframes rise { from { opacity: 0.35; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero rise" id="hero">
+    <p class="eyebrow" id="eyebrow"><span class="dot" aria-hidden="true"></span>Open now · first 100 people</p>
+    <h1>₦100 free, in cash.</h1>
+    <p id="heroSub">Create an account and claim ₦100 every 24 hours for 7 days. You pay nothing, ever.</p>
+  </section>
+
+  <section class="meter rise d1" aria-live="polite">
+    <div class="meter-row"><span id="spotsText">100 of 100 spots open</span><span id="meterRight">₦100 a day · 7 days</span></div>
+    <div class="bar" role="img" id="spotsBar" aria-label="Spots open"><div id="spotsFill" style="width:0%"></div></div>
+  </section>
+
+  <section class="ticker" aria-label="Giveaway facts">
+    <div class="ticker-track">
+      <div class="grp"><span>No fees to claim</span><span>₦100 each</span><span>First 100 people only</span><span>Withdraw with a code from us</span><span>Paid after confirmation</span></div>
+      <div class="grp" aria-hidden="true"><span>No fees to claim</span><span>₦100 each</span><span>First 100 people only</span><span>Withdraw with a code from us</span><span>Paid after confirmation</span></div>
+    </div>
+  </section>
+
+  <section class="card rise d2" id="authView">
+    <div class="tabs" role="tablist" aria-label="Account">
+      <button class="tab on" id="tabUp" type="button" role="tab" aria-selected="true">Sign up</button>
+      <button class="tab" id="tabIn" type="button" role="tab" aria-selected="false">Log in</button>
+    </div>
+    <form id="authForm" novalidate style="display:flex;flex-direction:column;gap:14px">
+      <div class="field" id="fName"><label for="aName">Your name</label><input id="aName" autocomplete="name" placeholder="e.g. Chinedu Okafor"></div>
+      <div class="field"><label for="aUser">Username <small>(letters, numbers, underscore)</small></label><input id="aUser" autocomplete="username" autocapitalize="none" placeholder="e.g. chinedu_o"></div>
+      <div class="field" id="fPhone"><label for="aPhone">Your phone number</label><input id="aPhone" inputmode="tel" autocomplete="tel" placeholder="e.g. 08012345678"></div>
+      <div class="field"><label for="aPass">Password <small>(at least 6 characters)</small></label><input id="aPass" type="password" autocomplete="current-password"></div>
+      <button class="btn" type="submit" id="authBtn">Create account</button>
+      <p class="msg" id="authMsg" hidden></p>
+    </form>
+    <p class="fine">Your account is saved on this phone only. If you clear your browser data, the account and balance are gone, so do not clear it before you withdraw.</p>
+  </section>
+
+  <div id="appView" hidden>
+    <div class="topbar rise">
+      <p class="who" id="hello">Hi</p>
+      <button class="link" id="logoutBtn" type="button">Log out</button>
+    </div>
+
+    <section class="balance rise d1" aria-live="polite">
+      <p class="lbl">Available balance</p>
+      <p class="amt" id="balAmt">₦0</p>
+      <p class="pend" id="pendLine" hidden></p>
+      <p class="pend" id="paidLine" hidden></p>
+    </section>
+
+    <section class="card" id="claimCard">
+      <h2 id="claimTitle">Your daily ₦100</h2>
+      <p class="sub" id="claimSub">Tap the button to claim your money.</p>
+      <button class="btn" id="claimBtn" type="button">Claim ₦100</button>
+      <p class="msg" id="claimMsg" hidden></p>
+    </section>
+
+    <div class="actions" role="group" aria-label="Money actions">
+      <button class="act" type="button" data-p="pWd" aria-expanded="false">Withdraw</button>
+      <button class="act" type="button" data-p="pTr" aria-expanded="false">Transfer</button>
+      <button class="act" type="button" data-p="pRc" aria-expanded="false">Receive</button>
+    </div>
+
+    <section class="card" id="pWd" hidden>
+      <h2>Withdraw</h2>
+      <p class="sub">To withdraw you need a withdrawal code from us. Enter it with your bank details. Each code works once and then expires. Your amount shows as pending until we pay it into your account. When we pay, we send you a confirmation code that moves it to Paid.</p>
+      <div class="field"><label for="wCode">Withdrawal code</label><input id="wCode" autocapitalize="characters" autocomplete="off" placeholder="WD-..."></div>
+      <div class="field"><label for="wAmt">Amount in ₦ <small id="wMin"></small></label><input id="wAmt" type="number" inputmode="numeric" min="1" step="1"></div>
+      <div class="field"><label for="wBank">Bank</label><input id="wBank" list="banks" autocomplete="off" placeholder="e.g. GTBank, OPay, Access Bank"><datalist id="banks"><option value="Access Bank"></option><option value="Fidelity Bank"></option><option value="First Bank"></option><option value="FCMB"></option><option value="GTBank"></option><option value="Kuda"></option><option value="Moniepoint"></option><option value="OPay"></option><option value="PalmPay"></option><option value="Polaris Bank"></option><option value="Stanbic IBTC"></option><option value="Sterling Bank"></option><option value="UBA"></option><option value="Union Bank"></option><option value="Wema Bank"></option><option value="Zenith Bank"></option></datalist></div>
+      <div class="field"><label for="wAcct">Account number <small>(10 digits)</small></label><input id="wAcct" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="e.g. 0123456789"></div>
+      <div class="field"><label for="wName">Account name</label><input id="wName" autocomplete="off" placeholder="Name on the account"></div>
+      <button class="btn" id="wBtn" type="button">Send withdrawal request</button>
+      <p class="msg" id="wMsg" hidden></p>
+      <div id="wSend" hidden style="display:flex;flex-direction:column;gap:10px">
+        <p class="msg" id="wSendMsg"></p>
+        <div class="row">
+          <button class="btn ghost" id="wRetry" type="button">Send again</button>
+          <a class="btn ghost" id="wMail" href="#" hidden>Send from my email app</a>
+        </div>
+      </div>
+      <div class="field"><label for="cCode">Got paid? Paste the confirmation code we sent you</label><input id="cCode" autocapitalize="characters" autocomplete="off" placeholder="PAID-..."></div>
+      <button class="btn ghost" id="cBtn" type="button">Confirm payment</button>
+      <p class="msg" id="cMsg" hidden></p>
+    </section>
+
+    <section class="card" id="pTr" hidden>
+      <h2>Transfer</h2>
+      <p class="sub">Send coins to a friend by their username. You get a code to give them.</p>
+      <div class="field"><label for="tTo">Friend's username</label><input id="tTo" autocapitalize="none" placeholder="e.g. ada_9"></div>
+      <div class="field"><label for="tAmt">Amount in ₦</label><input id="tAmt" type="number" inputmode="numeric" min="1" step="1"></div>
+      <button class="btn" id="tBtn" type="button">Send coins</button>
+      <p class="msg" id="tMsg" hidden></p>
+      <div id="tResult" hidden style="display:flex;flex-direction:column;gap:10px">
+        <p class="fine" id="tResultLbl"></p>
+        <div class="codebox" id="tCode"></div>
+        <div class="row">
+          <button class="btn ghost" id="tCopy" type="button">Copy code</button>
+          <button class="btn ghost" id="tShare" type="button">Share code</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="pRc" hidden>
+      <h2>Receive</h2>
+      <p class="sub">A friend sent you coins? Paste the code they gave you.</p>
+      <div class="field"><label for="rCode">Transfer code</label><input id="rCode" autocapitalize="none" autocomplete="off" placeholder="TRF-..."></div>
+      <button class="btn" id="rBtn" type="button">Receive coins</button>
+      <p class="msg" id="rMsg" hidden></p>
+    </section>
+
+    <section class="card">
+      <h2>Activity</h2>
+      <ul class="hist" id="hist"></ul>
+      <p class="fine" id="histEmpty">Nothing yet. Claim your first ₦100 to get started.</p>
+    </section>
+  </div>
+
+  <section class="card" id="ownerWallet" hidden>
+    <h2>Owner wallet</h2>
+    <p class="sub">Add any amount to your own wallet, then send any amount to a user by their username. You get a code to give them. They paste it under Receive.</p>
+    <p class="balance" style="padding:16px 18px"><span class="lbl">Your wallet</span><span class="amt" id="owBal" style="font-size:40px">₦0</span></p>
+    <div class="field"><label for="owAdd">Add to my wallet (₦)</label><input id="owAdd" type="number" inputmode="numeric" min="1" step="1" placeholder="e.g. 5000"></div>
+    <button class="btn" id="owAddBtn" type="button">Add to wallet</button>
+    <div class="field"><label for="owTo">Send to username</label><input id="owTo" autocapitalize="none" autocomplete="off" placeholder="e.g. ada_9"></div>
+    <div class="field"><label for="owAmt">Amount to send (₦)</label><input id="owAmt" type="number" inputmode="numeric" min="1" step="1" placeholder="e.g. 1000"></div>
+    <button class="btn" id="owSendBtn" type="button">Send from wallet</button>
+    <p class="msg" id="owMsg" hidden></p>
+    <div id="owResult" hidden style="display:flex;flex-direction:column;gap:10px">
+      <p class="fine" id="owResultLbl"></p>
+      <div class="codebox" id="owCode"></div>
+      <div class="row">
+        <button class="btn ghost" id="owCopy" type="button">Copy code</button>
+        <button class="btn ghost" id="owShare" type="button">Share code</button>
+      </div>
+    </div>
+    <ul class="hist" id="owHist"></ul>
+  </section>
+
+  <section class="card" id="ownerCodes" hidden>
+    <h2>Owner: withdrawal codes</h2>
+    <p class="sub">A user can only withdraw with a code from you. Each code is for one username, works once, and expires. Give the code to the person you want to pay.</p>
+    <p class="msg bad" id="ocSetup" hidden>Your email is not set yet. Put it in CONFIG.email in the code, otherwise withdrawal requests cannot reach you.</p>
+    <div class="field"><label for="ocUser">Username</label><input id="ocUser" autocapitalize="none" autocomplete="off" placeholder="e.g. ada_9"></div>
+    <div class="field"><label for="ocCap">Most they can withdraw in ₦ <small>(leave empty for no limit)</small></label><input id="ocCap" type="number" inputmode="numeric" min="1" step="1" placeholder="e.g. 700"></div>
+    <div class="field"><label for="ocLife">Code works for</label><select id="ocLife"><option value="60">1 hour</option><option value="1440" selected>1 day</option><option value="4320">3 days</option><option value="10080">7 days</option></select></div>
+    <button class="btn" id="ocBtn" type="button">Create withdrawal code</button>
+    <p class="msg" id="ocMsg" hidden></p>
+    <div id="ocResult" hidden style="display:flex;flex-direction:column;gap:10px">
+      <p class="fine" id="ocResultLbl"></p>
+      <div class="codebox" id="ocCode"></div>
+      <div class="row">
+        <button class="btn ghost" id="ocCopy" type="button">Copy code</button>
+        <button class="btn ghost" id="ocShare" type="button">Share code</button>
+      </div>
+    </div>
+    <ul class="hist" id="ocHist"></ul>
+    <button class="btn ghost" id="ocTest" type="button">Send a test email to me</button>
+    <p class="msg" id="ocTestMsg" hidden></p>
+  </section>
+
+  <section class="card" id="ownerView" hidden>
+    <h2>Owner: confirm a payment</h2>
+    <p class="sub">Paste the user's withdrawal email here. Pay the bank account shown, then tap Make confirmation code and send the code to that user.</p>
+    <div class="field"><label for="oPaste">Withdrawal email</label><textarea id="oPaste" rows="5" placeholder="Paste the whole email text here"></textarea></div>
+    <p class="fine" id="oCount"></p>
+    <p class="msg ok" id="oInfo" hidden></p>
+    <p class="msg bad" id="oWarn" hidden style="white-space:pre-line"></p>
+    <div class="field"><label for="oRef">Ref</label><input id="oRef" autocapitalize="characters" autocomplete="off" placeholder="e.g. K3F9QZ"></div>
+    <div class="field"><label for="oAmt">Amount you paid in ₦</label><input id="oAmt" type="number" inputmode="numeric" min="1" step="1"></div>
+    <button class="btn" id="oBtn" type="button">Make confirmation code</button>
+    <p class="msg" id="oMsg" hidden></p>
+    <div id="oResult" hidden style="display:flex;flex-direction:column;gap:10px">
+      <div class="codebox" id="oCode"></div>
+      <div class="row">
+        <button class="btn ghost" id="oCopy" type="button">Copy code</button>
+        <button class="btn ghost" id="oShare" type="button">Share code</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Good to know</h2>
+    <p class="fine">Nobody will ever ask you to pay to receive this money. If someone does, it is not us. Spots close when all 100 are taken. We pay each person once: one phone number and one bank account per person. Withdrawals need a code from us and are paid after we confirm them.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  var CONFIG = { total: 100, taken: 0, amount: 100, days: 7, minPayout: 100, ownerSecret: "change-this-secret-word", email: "PUT-YOUR-EMAIL-HERE", pageUrl: "" };
+  var DAY = 24 * 60 * 60 * 1000;
+  var KEY = "giveaway_app_v1";
+  var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  function $(id) { return document.getElementById(id); }
+  function clean(s) { return String(s || "").replace(/\s+/g, " ").trim(); }
+  function fmt(n) { return "₦" + Number(n).toLocaleString("en-NG"); }
+  function rid() { return Math.random().toString(36).slice(2, 8).toUpperCase(); }
+  function fnv(s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return ("00000000" + h.toString(16)).slice(-8); }
+  function phoneOk(p) { var d = String(p).replace(/\D/g, ""); return d.length >= 10 && d.length <= 14; }
+  function userOk(u) { return /^[a-z0-9_]{3,20}$/.test(u); }
+  function show(el, text, kind) { el.textContent = text; el.className = "msg" + (kind ? " " + kind : ""); el.hidden = false; }
+  function hide(el) { el.hidden = true; }
+  function hash(s) {
+    var enc = new TextEncoder().encode(s);
+    if (window.crypto && window.crypto.subtle) {
+      return window.crypto.subtle.digest("SHA-256", enc).then(function (b) {
+        return Array.prototype.map.call(new Uint8Array(b), function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
+      });
+    }
+    return Promise.resolve(fnv(s) + fnv(s + "x"));
+  }
+  function b64e(s) { return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+  function b64d(s) { s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; return decodeURIComponent(escape(atob(s))); }
+  function pageUrl() { return CONFIG.pageUrl || (/^https?:/.test(location.href) ? location.href.split("#")[0] : ""); }
+
+  /* Local storage with a safe fallback */
+  var mem = null;
+  function load() {
+    try { var r = localStorage.getItem(KEY); if (r) { var o = JSON.parse(r); if (o && o.users) return o; } } catch (e) {}
+    return mem || { users: {}, session: null, claimedBy: null, usedCodes: [] };
+  }
+  var db = load();
+  if (!db.usedCodes) db.usedCodes = [];
+  if (!db.outbox) db.outbox = [];
+  Object.keys(db.users).forEach(function (k) {
+    var x = db.users[k];
+    if (typeof x.claims !== "number") {
+      x.claims = x.claimed ? 1 : 0;
+      var first = (x.hist || []).filter(function (h) { return h.type === "claim"; })[0];
+      x.lastClaim = first ? first.ts : 0;
+    }
+    if (typeof x.lastClaim !== "number") x.lastClaim = 0;
+    if (!Array.isArray(x.wds)) {
+      x.wds = (x.hist || []).filter(function (h) { return h.type === "withdraw"; }).map(function (h) {
+        var m = /ref (\w+)/.exec(h.text);
+        return { ref: m ? m[1] : "", amt: -h.amt, ts: h.ts, paid: false };
+      }).filter(function (w) { return w.ref; });
+    }
+    if (typeof x.paid !== "number") x.paid = 0;
+  });
+  function save() { mem = db; try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {} }
+  function me() { return db.session && db.users[db.session] ? db.users[db.session] : null; }
+  function log(u, type, text, amt) {
+    u.hist.unshift({ ts: Date.now(), type: type, text: text, amt: amt });
+    if (u.hist.length > 40) u.hist.length = 40;
+  }
+
+  /* Spots meter */
+  var open = Math.max(0, CONFIG.total - CONFIG.taken);
+  var closed = open === 0;
+  var pct = (open / CONFIG.total) * 100;
+  $("heroSub").textContent = "Create an account and claim " + fmt(CONFIG.amount) + " every 24 hours for " + CONFIG.days + " days. You pay nothing, ever.";
+  $("meterRight").textContent = fmt(CONFIG.amount) + " a day · " + CONFIG.days + " days";
+  function spotLabel(n) { return closed ? "All " + CONFIG.total + " spots are taken" : n + " of " + CONFIG.total + " spots open"; }
+  $("spotsBar").setAttribute("aria-label", open + " of " + CONFIG.total + " spots open");
+  if (closed) $("eyebrow").textContent = "Closed · all " + CONFIG.total + " spots taken";
+  if (reduce) {
+    $("spotsText").textContent = spotLabel(open);
+    $("spotsFill").style.width = pct + "%";
+  } else {
+    $("spotsText").textContent = spotLabel(0);
+    var t0 = null;
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 1300);
+      $("spotsText").textContent = spotLabel(Math.round(open * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { $("spotsFill").style.width = pct + "%"; }); });
+  }
+
+  /* Auth */
+  var mode = "up";
+  function setMode(m) {
+    mode = m;
+    $("tabUp").classList.toggle("on", m === "up");
+    $("tabIn").classList.toggle("on", m === "in");
+    $("tabUp").setAttribute("aria-selected", m === "up");
+    $("tabIn").setAttribute("aria-selected", m === "in");
+    $("fName").hidden = m === "in";
+    $("fPhone").hidden = m === "in";
+    $("authBtn").textContent = m === "up" ? "Create account" : "Log in";
+    $("aPass").setAttribute("autocomplete", m === "up" ? "new-password" : "current-password");
+    hide($("authMsg"));
+  }
+  $("tabUp").addEventListener("click", function () { setMode("up"); });
+  $("tabIn").addEventListener("click", function () { setMode("in"); });
+
+  $("authForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var uname = clean($("aUser").value).toLowerCase(), pw = $("aPass").value, msg = $("authMsg");
+    if (!userOk(uname)) { show(msg, "Username must be 3 to 20 letters, numbers or underscores.", "bad"); return; }
+    if (pw.length < 6) { show(msg, "Password must be at least 6 characters.", "bad"); return; }
+    if (mode === "up") {
+      var name = clean($("aName").value), phone = clean($("aPhone").value);
+      if (name.length < 2) { show(msg, "Enter your name.", "bad"); return; }
+      if (!phoneOk(phone)) { show(msg, "Enter a phone number with 10 to 14 digits.", "bad"); return; }
+      if (db.users[uname]) { show(msg, "That username is taken on this phone. Pick another or log in.", "bad"); return; }
+      var salt = rid() + rid();
+      hash(salt + pw).then(function (h) {
+        db.users[uname] = { username: uname, name: name, phone: phone, salt: salt, hash: h, balance: 0, pending: 0, claims: 0, lastClaim: 0, paid: 0, wds: [], lastCode: null, hist: [] };
+        db.session = uname; save();
+        $("authForm").reset(); hide(msg); route();
+      });
+    } else {
+      var u = db.users[uname];
+      if (!u) { show(msg, "No account with that username on this phone. Sign up first.", "bad"); return; }
+      hash(u.salt + pw).then(function (h) {
+        if (h !== u.hash) { show(msg, "Wrong password.", "bad"); return; }
+        db.session = uname; save();
+        $("authForm").reset(); hide(msg); route();
+      });
+    }
+  });
+  $("logoutBtn").addEventListener("click", function () { db.session = null; save(); route(); });
+
+  /* Balance display */
+  var shown = 0, raf = null;
+  function setBalance(n) {
+    if (raf) cancelAnimationFrame(raf);
+    if (reduce || n === shown) { shown = n; $("balAmt").textContent = fmt(n); return; }
+    var from = shown, t1 = null;
+    var go = function (ts) {
+      if (t1 === null) t1 = ts;
+      var p = Math.min(1, (ts - t1) / 700);
+      $("balAmt").textContent = fmt(Math.round(from + (n - from) * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(go); else shown = n;
+    };
+    raf = requestAnimationFrame(go);
+  }
+
+  function claimState(u) {
+    if (u.claims >= CONFIG.days) return { s: "done" };
+    if (u.claims === 0) {
+      if (closed) return { s: "full" };
+      if (db.claimedBy && db.claimedBy !== u.username) return { s: "phone" };
+      return { s: "ready" };
+    }
+    var wait = u.lastClaim + DAY - Date.now();
+    return wait > 0 ? { s: "wait", ms: wait } : { s: "ready" };
+  }
+  function hms(ms) {
+    var s = Math.ceil(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    s = s % 60;
+    return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function updateClaim() {
+    var u = me(); if (!u) return;
+    var cb = $("claimBtn"), sub = $("claimSub"), st = claimState(u);
+    var total = CONFIG.days, amt = fmt(CONFIG.amount);
+    $("claimTitle").textContent = "Your daily " + amt;
+    cb.removeAttribute("aria-disabled");
+    if (st.s === "ready") {
+      sub.textContent = "Claim " + (u.claims + 1) + " of " + total + ". Tap the button to claim.";
+      cb.textContent = "Claim " + amt;
+    } else if (st.s === "wait") {
+      sub.textContent = "You have claimed " + u.claims + " of " + total + ". Your next " + amt + " opens 24 hours after your last claim.";
+      cb.textContent = "Next claim in " + hms(st.ms);
+      cb.setAttribute("aria-disabled", "true");
+    } else if (st.s === "done") {
+      sub.textContent = "All " + total + " claims are done. Use Withdraw to cash out your balance.";
+      cb.textContent = "All claims done";
+      cb.setAttribute("aria-disabled", "true");
+    } else if (st.s === "full") {
+      sub.textContent = "All " + CONFIG.total + " spots are taken.";
+      cb.textContent = "Giveaway is full";
+      cb.setAttribute("aria-disabled", "true");
+    } else {
+      sub.textContent = "Another account on this phone already claimed. It is one account per phone.";
+      cb.textContent = "Already claimed on this phone";
+      cb.setAttribute("aria-disabled", "true");
+    }
+  }
+
+  function route() {
+    var u = me();
+    $("authView").hidden = !!u;
+    $("hero").hidden = !!u;
+    $("appView").hidden = !u;
+    if (u) render();
+  }
+
+  function render() {
+    var u = me(); if (!u) return;
+    $("hello").textContent = "Hi, " + (u.name || u.username);
+    setBalance(u.balance);
+    if (u.pending > 0) { $("pendLine").textContent = "Pending withdrawal: " + fmt(u.pending); $("pendLine").hidden = false; } else { $("pendLine").hidden = true; }
+
+    if (u.paid > 0) { $("paidLine").textContent = "Paid out so far: " + fmt(u.paid); $("paidLine").hidden = false; } else { $("paidLine").hidden = true; }
+    updateClaim();
+    $("wMin").textContent = "(minimum " + fmt(CONFIG.minPayout) + ", or your whole balance)";
+
+    var tr = $("tResult");
+    if (u.lastCode) {
+      tr.hidden = false;
+      $("tResultLbl").textContent = "Last transfer: " + fmt(u.lastCode.amt) + " to " + u.lastCode.to + ". Give this code to your friend. It works once.";
+      $("tCode").textContent = u.lastCode.code;
+    } else { tr.hidden = true; }
+
+    var ul = $("hist"); ul.textContent = "";
+    u.hist.slice(0, 15).forEach(function (h) {
+      var li = document.createElement("li");
+      var t = document.createElement("span"); t.className = "t"; t.textContent = h.text;
+      var d = document.createElement("span"); d.className = "d";
+      var dt = new Date(h.ts);
+      d.textContent = dt.toLocaleDateString("en-NG", { day: "numeric", month: "short" }) + ", " + dt.toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" });
+      var a = document.createElement("span"); a.className = "a " + (h.amt >= 0 ? "plus" : "minus");
+      a.textContent = (h.amt >= 0 ? "+" : "−") + fmt(Math.abs(h.amt));
+      if (h.type === "paid") a.textContent = "Paid";
+      li.appendChild(t); li.appendChild(d); li.appendChild(a); ul.appendChild(li);
+    });
+    $("histEmpty").hidden = u.hist.length > 0;
+    renderSend();
+  }
+
+  /* Panels */
+  var panels = ["pWd", "pTr", "pRc"];
+  Array.prototype.forEach.call(document.querySelectorAll(".act"), function (b) {
+    b.addEventListener("click", function () {
+      var target = b.getAttribute("data-p"), wasOpen = !$(target).hidden;
+      panels.forEach(function (p) { $(p).hidden = true; });
+      Array.prototype.forEach.call(document.querySelectorAll(".act"), function (x) { x.setAttribute("aria-expanded", "false"); });
+      if (!wasOpen) {
+        $(target).hidden = false; b.setAttribute("aria-expanded", "true");
+        var u = me();
+        if (target === "pWd" && u) {
+          $("wAmt").value = u.balance > 0 ? u.balance : "";
+          if (u.bank) { $("wBank").value = u.bank.bank; $("wAcct").value = u.bank.acct; $("wName").value = u.bank.name; }
+        }
+        ["wMsg", "tMsg", "rMsg", "cMsg"].forEach(function (m) { hide($(m)); });
+      }
+    });
+  });
+
+  /* Claim */
+  $("claimBtn").addEventListener("click", function () {
+    var u = me(), msg = $("claimMsg"); if (!u) return;
+    var st = claimState(u);
+    if (st.s !== "ready") { if (st.s === "wait") show(msg, "Your next claim opens in " + hms(st.ms) + ".", "bad"); return; }
+    var n = u.claims + 1, now = Date.now();
+    u.claims = n; u.lastClaim = now; u.balance += CONFIG.amount; db.claimedBy = u.username;
+    log(u, "claim", "Daily claim " + n + " of " + CONFIG.days, CONFIG.amount);
+    save();
+    show(msg, "Claimed " + fmt(CONFIG.amount) + ". It is in your balance.", "ok");
+    render();
+  });
+
+  /* Email delivery with FormSubmit: saved queue, automatic retries and fallbacks */
+  var sending = false;
+  function emailSet() { return !!CONFIG.email && CONFIG.email.indexOf("PUT-") !== 0; }
+  function unsent() { return db.outbox.filter(function (x) { return !x.sent; }); }
+  function delay(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function payload(it) { return { _subject: it.subject, _template: "box", _captcha: "false", message: it.text }; }
+  function post(it) {
+    return new Promise(function (resolve) {
+      var done = false, ctl = window.AbortController ? new AbortController() : null, timer;
+      function fin(ok) { if (done) return; done = true; clearTimeout(timer); resolve(ok); }
+      timer = setTimeout(function () { try { if (ctl) ctl.abort(); } catch (e) {} fin(false); }, 15000);
+      try {
+        fetch("https://formsubmit.co/ajax/" + CONFIG.email, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload(it)),
+          signal: ctl ? ctl.signal : undefined
+        }).then(function (r) {
+          return r.json().then(function (j) { fin(r.ok && String(j.success) === "true"); }, function () { fin(false); });
+        }).catch(function () { fin(false); });
+      } catch (e) { fin(false); }
+    });
+  }
+  function attempt(it, n) {
+    return post(it).then(function (ok) {
+      if (ok || n >= 2) return ok;
+      return delay(n === 0 ? 2000 : 5000).then(function () { return attempt(it, n + 1); });
+    });
+  }
+  function formFallback(it) {
+    try {
+      var name = "fs" + it.id, fr = document.createElement("iframe"), form = document.createElement("form"), p = payload(it);
+      fr.name = name; fr.style.display = "none"; fr.setAttribute("aria-hidden", "true");
+      form.method = "POST"; form.action = "https://formsubmit.co/" + CONFIG.email; form.target = name; form.style.display = "none";
+      Object.keys(p).forEach(function (k) { var t = document.createElement("textarea"); t.name = k; t.value = p[k]; form.appendChild(t); });
+      document.body.appendChild(fr); document.body.appendChild(form); form.submit();
+      setTimeout(function () { try { form.remove(); fr.remove(); } catch (e) {} }, 20000);
+    } catch (e) {}
+  }
+  function queueEmail(subject, text, user) {
+    var it = { id: rid() + rid(), ts: Date.now(), user: user, subject: subject, text: text, sent: false, tries: 0, next: 0, fb: false };
+    db.outbox.push(it);
+    var done = db.outbox.filter(function (x) { return x.sent; });
+    if (done.length > 30) { var drop = done.slice(0, done.length - 30); db.outbox = db.outbox.filter(function (x) { return drop.indexOf(x) < 0; }); }
+    save();
+    return it;
+  }
+  function renderSend() {
+    var u = me(), box = $("wSend"); if (!u) return;
+    var mine = db.outbox.filter(function (x) { return x.user === u.username; }), pend = mine.filter(function (x) { return !x.sent; }), msg = $("wSendMsg");
+    if (!mine.length) { box.hidden = true; return; }
+    box.hidden = false;
+    if (!emailSet()) show(msg, "Setup needed: the owner has not added an email address yet. Your request is saved and will go out once it is added.", "bad");
+    else if (pend.length && sending) show(msg, "Sending your request…", "");
+    else if (pend.length) show(msg, "Not delivered yet. Your request is saved on this phone and we keep trying automatically. Keep this page open, or tap Send again.", "bad");
+    else show(msg, "Delivered. Your withdrawal request reached us.", "ok");
+    $("wRetry").hidden = !pend.length;
+    var mail = $("wMail");
+    if (pend.length && CONFIG.email.indexOf("@") > 0) {
+      mail.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(pend[0].subject) + "&body=" + encodeURIComponent(pend[0].text);
+      mail.hidden = false;
+    } else { mail.hidden = true; }
+  }
+  function flush(manual) {
+    if (sending) return;
+    var now = Date.now();
+    var list = unsent().filter(function (x) { return manual || (x.next || 0) <= now; });
+    if (!list.length || !emailSet()) { renderSend(); return; }
+    if (!manual && navigator.onLine === false) { renderSend(); return; }
+    sending = true; renderSend();
+    var i = 0;
+    (function next() {
+      if (i >= list.length) { sending = false; save(); renderSend(); return; }
+      var it = list[i++];
+      attempt(it, 0).then(function (ok) {
+        if (ok) { it.sent = true; it.sentAt = Date.now(); }
+        else {
+          it.tries = (it.tries || 0) + 1;
+          it.next = Date.now() + Math.min(30000 * Math.pow(2, it.tries - 1), 900000);
+          if (!it.fb) { it.fb = true; formFallback(it); }
+        }
+        save(); renderSend(); next();
+      });
+    })();
+  }
+  $("wRetry").addEventListener("click", function () { flush(true); });
+
+  /* Withdraw: needs a one-time code from the owner */
+  function parseWdCode(raw) {
+    var parts = clean(raw).toUpperCase().split("-");
+    if (parts.length !== 6 || parts[0] !== "WD") return null;
+    var user = parts[1].toLowerCase(), id = parts[2], cap = parseInt(parts[3], 10), exp = parseInt(parts[4], 36);
+    if (!userOk(user) || !/^[A-Z0-9]{4,12}$/.test(id) || !(cap >= 0) || !(exp > 0)) return null;
+    if (parts[5] !== fnv("wd|" + user + "|" + id + "|" + cap + "|" + exp + "|" + CONFIG.ownerSecret).toUpperCase()) return null;
+    return { user: user, id: id, cap: cap, exp: exp };
+  }
+  $("wBtn").addEventListener("click", function () {
+    var u = me(), msg = $("wMsg"); if (!u) return;
+    if (!emailSet()) { show(msg, "Withdrawals are not ready yet. The owner has not added an email address.", "bad"); return; }
+    var c = parseWdCode($("wCode").value);
+    if (!c) { show(msg, "Enter the withdrawal code we gave you. Check that you pasted all of it.", "bad"); return; }
+    if (c.user !== u.username) { show(msg, "This code was made for " + c.user + ", not for your account.", "bad"); return; }
+    if (db.usedCodes.indexOf("wd:" + c.id) >= 0) { show(msg, "This code has already been used.", "bad"); return; }
+    if (Date.now() > c.exp * 60000) { show(msg, "This code has expired. Ask us for a new one.", "bad"); return; }
+    var amt = parseInt($("wAmt").value, 10);
+    if (!(amt >= 1)) { show(msg, "Enter the amount you want to withdraw.", "bad"); return; }
+    if (amt > u.balance) { show(msg, "You only have " + fmt(u.balance) + " available.", "bad"); return; }
+    if (amt < CONFIG.minPayout && amt !== u.balance) { show(msg, "The smallest withdrawal is " + fmt(CONFIG.minPayout) + ", unless you withdraw your whole balance.", "bad"); return; }
+    if (c.cap > 0 && amt > c.cap) { show(msg, "This code allows up to " + fmt(c.cap) + ".", "bad"); return; }
+    var bank = clean($("wBank").value), acct = $("wAcct").value.replace(/\D/g, ""), accName = clean($("wName").value);
+    if (bank.length < 2) { show(msg, "Enter your bank.", "bad"); return; }
+    if (acct.length !== 10) { show(msg, "Enter your 10-digit account number.", "bad"); return; }
+    if (accName.length < 2) { show(msg, "Enter the name on the account.", "bad"); return; }
+    db.usedCodes.push("wd:" + c.id);
+    u.bank = { bank: bank, acct: acct, name: accName };
+    var ref = rid();
+    u.balance -= amt; u.pending += amt;
+    u.wds.push({ ref: ref, amt: amt, ts: Date.now(), paid: false, bank: u.bank, code: c.id });
+    log(u, "withdraw", "Withdrawal requested, pending (ref " + ref + ")", -amt);
+    var text = "Withdrawal request\nRef: " + ref + "\nCode ID: " + c.id + "\nUsername: " + u.username + "\nName: " + u.name + "\nPhone: " + u.phone + "\nAmount: " + fmt(amt) + "\nBank: " + bank + "\nAccount number: " + acct + "\nAccount name: " + accName + "\nClaims made: " + u.claims + " of " + CONFIG.days + "\nPhone time: " + new Date().toLocaleString("en-NG");
+    queueEmail("Withdrawal " + fmt(amt) + " · Ref " + ref + " · " + u.username, text, u.username);
+    save();
+    $("wCode").value = "";
+    show(msg, "Request saved as pending. Sending it to us now.", "ok");
+    $("wAmt").value = u.balance > 0 ? u.balance : "";
+    render();
+    flush(true);
+  });
+
+  /* Transfer */
+  $("tBtn").addEventListener("click", function () {
+    var u = me(), msg = $("tMsg"); if (!u) return;
+    var to = clean($("tTo").value).toLowerCase(), amt = parseInt($("tAmt").value, 10);
+    if (!userOk(to)) { show(msg, "Enter your friend's username (3 to 20 letters, numbers or underscores).", "bad"); return; }
+    if (to === u.username) { show(msg, "You cannot send coins to yourself.", "bad"); return; }
+    if (!(amt >= 1)) { show(msg, "Enter the amount to send.", "bad"); return; }
+    if (amt > u.balance) { show(msg, "You only have " + fmt(u.balance) + " available.", "bad"); return; }
+    var id = rid() + rid();
+    var json = JSON.stringify({ i: id, f: u.username, t: to, a: amt });
+    var code = "TRF-" + b64e(json) + "." + fnv(json + "#giveaway");
+    u.balance -= amt;
+    u.lastCode = { code: code, to: to, amt: amt };
+    log(u, "transfer", "Sent to " + to + " (ref " + id + ")", -amt);
+    save();
+    show(msg, "Sent. Give the code below to " + to + ".", "ok");
+    $("tTo").value = ""; $("tAmt").value = "";
+    render();
+  });
+  $("tShare").addEventListener("click", function () {
+    var u = me(); if (!u || !u.lastCode) return;
+    shareOrCopy("I sent you " + fmt(u.lastCode.amt) + " from the ₦" + CONFIG.amount + " giveaway. Open the app, tap Receive and paste this code:\n" + u.lastCode.code + (pageUrl() ? "\n" + pageUrl() : ""), $("tMsg"), $("tCode"));
+  });
+  function shareOrCopy(text, msgEl, selEl) {
+    if (navigator.share) { navigator.share({ text: text }).catch(function () {}); return; }
+    copyText(text, msgEl, selEl);
+  }
+
+  function copyText(text, msgEl, selEl) {
+    var done = function () { show(msgEl, "Copied.", "ok"); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(selEl);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      show(msgEl, "Code selected. Press and hold, then choose Copy.", "");
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
+  }
+  $("tCopy").addEventListener("click", function () { var u = me(); if (u && u.lastCode) copyText(u.lastCode.code, $("tMsg"), $("tCode")); });
+
+  /* Receive */
+  $("rBtn").addEventListener("click", function () {
+    var u = me(), msg = $("rMsg"); if (!u) return;
+    var raw = clean($("rCode").value), bad = "That code is not valid. Check that you pasted all of it.";
+    if (raw.indexOf("TRF-") !== 0 || raw.indexOf(".") < 0) { show(msg, bad, "bad"); return; }
+    var body = raw.slice(4, raw.lastIndexOf(".")), chk = raw.slice(raw.lastIndexOf(".") + 1), data;
+    try { var json = b64d(body); if (fnv(json + "#giveaway") !== chk) { show(msg, bad, "bad"); return; } data = JSON.parse(json); } catch (err) { show(msg, bad, "bad"); return; }
+    if (!data || !(data.a >= 1) || !data.i || !data.t) { show(msg, bad, "bad"); return; }
+    if (data.t !== u.username) { show(msg, "This code was made for " + data.t + ", not for your account.", "bad"); return; }
+    if (db.usedCodes.indexOf(data.i) >= 0) { show(msg, "This code has already been used.", "bad"); return; }
+    db.usedCodes.push(data.i);
+    u.balance += data.a;
+    log(u, "receive", "Received from " + data.f + " (ref " + data.i + ")", data.a);
+    save();
+    $("rCode").value = "";
+    show(msg, "You received " + fmt(data.a) + " from " + data.f + ".", "ok");
+    render();
+  });
+
+  /* Confirm payment (user side): moves a pending withdrawal to paid */
+  $("cBtn").addEventListener("click", function () {
+    var u = me(), msg = $("cMsg"); if (!u) return;
+    var parts = clean($("cCode").value).toUpperCase().split("-"), bad = "That code is not valid. Check that you pasted all of it.";
+    if (parts.length !== 4 || parts[0] !== "PAID") { show(msg, bad, "bad"); return; }
+    var ref = parts[1], amt = parseInt(parts[2], 10);
+    if (!(amt >= 1) || parts[3] !== fnv("paid|" + ref + "|" + amt + "|" + CONFIG.ownerSecret).toUpperCase()) { show(msg, bad, "bad"); return; }
+    var w = u.wds.filter(function (x) { return x.ref === ref; })[0];
+    if (!w) { show(msg, "This code is for a withdrawal that is not on this account.", "bad"); return; }
+    if (w.paid) { show(msg, "This payment is already confirmed.", "bad"); return; }
+    if (w.amt !== amt) { show(msg, "The amount on this code does not match your request.", "bad"); return; }
+    w.paid = true; u.pending = Math.max(0, u.pending - amt); u.paid += amt;
+    log(u, "paid", "Payment of " + fmt(amt) + " received (ref " + ref + ")", 0);
+    save();
+    $("cCode").value = "";
+    show(msg, "Confirmed. " + fmt(amt) + " moved from pending to paid.", "ok");
+    render();
+  });
+
+  /* Owner tools: open the page with #owner at the end of the address */
+  function checkOwner() { var on = location.hash === "#owner"; ["ownerView", "ownerWallet", "ownerCodes"].forEach(function (id) { $(id).hidden = !on; }); if (on) renderOwner(); }
+  if (!db.owner) db.owner = { balance: 0, hist: [] };
+  if (!db.owner.people) db.owner.people = {};
+  if (!db.owner.accts) db.owner.accts = {};
+  if (!db.owner.refs) db.owner.refs = {};
+  if (!db.owner.issued) db.owner.issued = {};
+  function when(ts) { var dt = new Date(ts); return dt.toLocaleDateString("en-NG", { day: "numeric", month: "short" }) + ", " + dt.toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" }); }
+  function addRow(ul, title, sub, amtText, plus) {
+    var li = document.createElement("li");
+    var t = document.createElement("span"); t.className = "t"; t.textContent = title;
+    var d = document.createElement("span"); d.className = "d"; d.textContent = sub;
+    var a = document.createElement("span"); a.className = "a " + (plus ? "plus" : "minus"); a.textContent = amtText;
+    li.appendChild(t); li.appendChild(d); li.appendChild(a); ul.appendChild(li);
+  }
+  function renderOwner() {
+    var o = db.owner;
+    $("owBal").textContent = fmt(o.balance);
+    oStats();
+    $("ocSetup").hidden = emailSet();
+    var ul = $("owHist"); ul.textContent = "";
+    o.hist.slice(0, 10).forEach(function (h) { addRow(ul, h.text, when(h.ts), (h.amt >= 0 ? "+" : "−") + fmt(Math.abs(h.amt)), h.amt >= 0); });
+    var cl = $("ocHist"); cl.textContent = "";
+    Object.keys(o.issued).map(function (k) { return o.issued[k]; }).sort(function (a, b) { return b.ts - a.ts; }).slice(0, 10).forEach(function (c) {
+      var expired = Date.now() > c.exp * 60000;
+      addRow(cl, c.user + " · code " + c.id + (c.cap ? " · up to " + fmt(c.cap) : ""),
+        c.used ? "Used for Ref " + c.ref : (expired ? "Expired " + when(c.exp * 60000) : "Valid until " + when(c.exp * 60000)),
+        c.used ? "Used" : (expired ? "Expired" : "Open"), !c.used && !expired);
+    });
+  }
+  function ologAdd(text, amt) { db.owner.hist.unshift({ ts: Date.now(), text: text, amt: amt }); if (db.owner.hist.length > 30) db.owner.hist.length = 30; }
+
+  /* Owner wallet */
+  var lastOw = null;
+  $("owAddBtn").addEventListener("click", function () {
+    var amt = parseInt($("owAdd").value, 10), msg = $("owMsg");
+    if (!(amt >= 1)) { show(msg, "Enter the amount to add.", "bad"); return; }
+    db.owner.balance += amt; ologAdd("Added to wallet", amt); save();
+    $("owAdd").value = ""; show(msg, fmt(amt) + " added to your wallet.", "ok"); renderOwner();
+  });
+  $("owSendBtn").addEventListener("click", function () {
+    var to = clean($("owTo").value).toLowerCase(), amt = parseInt($("owAmt").value, 10), msg = $("owMsg");
+    if (!userOk(to)) { show(msg, "Enter the user's username (3 to 20 letters, numbers or underscores).", "bad"); return; }
+    if (!(amt >= 1)) { show(msg, "Enter the amount to send.", "bad"); return; }
+    if (amt > db.owner.balance) { show(msg, "Your wallet only has " + fmt(db.owner.balance) + ". Add more first.", "bad"); return; }
+    var id = rid() + rid();
+    var json = JSON.stringify({ i: id, f: "owner", t: to, a: amt });
+    var code = "TRF-" + b64e(json) + "." + fnv(json + "#giveaway");
+    db.owner.balance -= amt; ologAdd("Sent to " + to + " (ref " + id + ")", -amt); save();
+    lastOw = { amt: amt, code: code };
+    $("owCode").textContent = code; $("owResult").hidden = false;
+    $("owResultLbl").textContent = "Sent " + fmt(amt) + " to " + to + ". Give them this code. It works once.";
+    $("owTo").value = ""; $("owAmt").value = ""; show(msg, "Sent. Give the code below to " + to + ".", "ok"); renderOwner();
+  });
+  $("owCopy").addEventListener("click", function () { var c = $("owCode").textContent; if (c) copyText(c, $("owMsg"), $("owCode")); });
+  $("owShare").addEventListener("click", function () {
+    if (!lastOw) return;
+    shareOrCopy("You have received " + fmt(lastOw.amt) + " from the giveaway. Open the app, tap Receive and paste this code:\n" + lastOw.code + (pageUrl() ? "\n" + pageUrl() : ""), $("owMsg"), $("owCode"));
+  });
+
+  /* Withdrawal codes: one username, works once, expires */
+  var lastWd = null;
+  $("ocBtn").addEventListener("click", function () {
+    var user = clean($("ocUser").value).toLowerCase(), cap = parseInt($("ocCap").value, 10) || 0, life = parseInt($("ocLife").value, 10), msg = $("ocMsg");
+    if (!userOk(user)) { show(msg, "Enter the user's username (3 to 20 letters, numbers or underscores).", "bad"); return; }
+    if (cap < 0) { show(msg, "The most they can withdraw must be a positive amount, or empty for no limit.", "bad"); return; }
+    var id = rid(), exp = Math.floor(Date.now() / 60000) + life;
+    var code = ("WD-" + user + "-" + id + "-" + cap + "-" + exp.toString(36) + "-" + fnv("wd|" + user + "|" + id + "|" + cap + "|" + exp + "|" + CONFIG.ownerSecret)).toUpperCase();
+    db.owner.issued[id] = { id: id, user: user, cap: cap, exp: exp, ts: Date.now(), used: false, ref: "" };
+    save();
+    lastWd = { user: user, code: code, cap: cap, exp: exp };
+    $("ocCode").textContent = code; $("ocResult").hidden = false;
+    $("ocResultLbl").textContent = "Code for " + user + (cap ? ", up to " + fmt(cap) : ", no amount limit") + ". Works once. Valid until " + when(exp * 60000) + ".";
+    $("ocUser").value = ""; $("ocCap").value = "";
+    show(msg, "Code created. Give it to " + user + ".", "ok");
+    renderOwner();
+  });
+  $("ocCopy").addEventListener("click", function () { var c = $("ocCode").textContent; if (c) copyText(c, $("ocMsg"), $("ocCode")); });
+  $("ocShare").addEventListener("click", function () {
+    if (!lastWd) return;
+    shareOrCopy("Your withdrawal code:\n" + lastWd.code + "\nOpen the app, tap Withdraw and enter it with your bank details. It works once and is valid until " + when(lastWd.exp * 60000) + "." + (pageUrl() ? "\n" + pageUrl() : ""), $("ocMsg"), $("ocCode"));
+  });
+  $("ocTest").addEventListener("click", function () {
+    var msg = $("ocTestMsg");
+    if (!emailSet()) { show(msg, "Put your email in CONFIG.email in the code first.", "bad"); return; }
+    show(msg, "Sending a test email…", "");
+    var it = { id: rid(), subject: "Test message from your giveaway site", text: "This is a test message.\nIf you can read this, withdrawal requests will reach you.\nTime: " + new Date().toLocaleString("en-NG") };
+    attempt(it, 0).then(function (ok) {
+      if (ok) show(msg, "Sent. Check your inbox and spam folder. If FormSubmit asks you to activate your email, open its email and click Activate.", "ok");
+      else show(msg, "Not confirmed. If this is the first time, open your inbox, find the FormSubmit activation email, click Activate, then tap this button again.", "bad");
+    });
+  });
+
+  /* Confirm a payment. Duplicate checks: each person is paid once, each code works once */
+  function parseWd(t) {
+    var g = function (re) { var m = re.exec(t); return m ? m[1].trim() : ""; };
+    return { ref: g(/Ref:\s*([A-Za-z0-9]+)/).toUpperCase(), codeId: g(/Code ID:\s*([A-Za-z0-9]+)/).toUpperCase(), user: g(/Username:\s*(\S+)/).toLowerCase(), name: g(/Name:\s*(.+)/), phone: g(/Phone:\s*([+\d][\d ]*)/).replace(/\D/g, "").slice(-10), bank: g(/Bank:\s*(.+)/), acct: g(/Account number:\s*(\d+)/), accName: g(/Account name:\s*(.+)/) };
+  }
+  function oStats() {
+    var o = db.owner, n = Object.keys(o.people).length, sum = 0;
+    Object.keys(o.refs).forEach(function (k) { sum += o.refs[k]; });
+    $("oCount").textContent = "People paid so far: " + n + " of " + CONFIG.total + " · Total confirmed: " + fmt(sum);
+  }
+  function oWarnings(p, amt) {
+    var o = db.owner, w = [], rec = p.phone ? o.people[p.phone] : null, max = CONFIG.amount * CONFIG.days;
+    if (p.ref && o.refs[p.ref]) w.push("Ref " + p.ref + " was already confirmed (" + fmt(o.refs[p.ref]) + ").");
+    if (p.codeId) {
+      var ic = o.issued[p.codeId];
+      if (!ic) w.push("Code " + p.codeId + " was not made on this phone. It may be fake.");
+      else {
+        if (ic.used && ic.ref !== p.ref) w.push("Code " + p.codeId + " was already used for Ref " + ic.ref + ". A code works once.");
+        if (p.user && ic.user !== p.user) w.push("Code " + p.codeId + " was made for " + ic.user + ", not " + p.user + ".");
+        if (ic.cap > 0 && amt > ic.cap) w.push("The amount is above the " + fmt(ic.cap) + " this code allows.");
+      }
+    } else if (p.acct || p.phone) w.push("This message has no Code ID. Withdrawals should come with one of your codes.");
+    if (rec && ((p.user && rec.user !== p.user) || (p.acct && rec.accts.indexOf(p.acct) < 0))) w.push("This phone number was already paid before under username " + rec.user + (rec.accts.length ? " to account " + rec.accts.join(", ") : "") + ". Possible second account.");
+    if (p.acct && p.phone && o.accts[p.acct] && o.accts[p.acct] !== p.phone) w.push("This bank account was already paid for a different phone number. Possible second account.");
+    if (amt >= 1 && (rec ? rec.total : 0) + amt > max) w.push("This would bring this person to " + fmt((rec ? rec.total : 0) + amt) + ". The most one person should get is " + fmt(max) + ".");
+    if (p.phone && !rec && Object.keys(o.people).length >= CONFIG.total) w.push("You have already paid " + CONFIG.total + " different people.");
+    return w;
+  }
+  function oRead() {
+    var p = parseWd($("oPaste").value), amt = parseInt($("oAmt").value, 10);
+    p.ref = clean($("oRef").value).toUpperCase() || p.ref;
+    return { p: p, amt: amt, w: oWarnings(p, amt) };
+  }
+  function recordPaid(p, amt) {
+    var o = db.owner; if (!p.ref || o.refs[p.ref]) return;
+    o.refs[p.ref] = amt;
+    if (p.codeId && o.issued[p.codeId] && !o.issued[p.codeId].used) { o.issued[p.codeId].used = true; o.issued[p.codeId].ref = p.ref; }
+    if (p.phone) {
+      var r = o.people[p.phone] || (o.people[p.phone] = { user: p.user, name: p.name, total: 0, accts: [] });
+      r.total += amt;
+      if (p.acct && r.accts.indexOf(p.acct) < 0) r.accts.push(p.acct);
+      if (p.acct && !o.accts[p.acct]) o.accts[p.acct] = p.phone;
+    }
+    save();
+  }
+  var okKey = "", lastPaid = null;
+  function oRefresh(fill) {
+    var t = $("oPaste").value, info = $("oInfo"), warn = $("oWarn");
+    if (fill) {
+      var p0 = parseWd(t), a = /Amount:[^\d\n]*([\d,]+)/.exec(t);
+      if (p0.ref) $("oRef").value = p0.ref;
+      if (a) $("oAmt").value = a[1].replace(/,/g, "");
+    }
+    var cur = oRead();
+    if (cur.p.acct && cur.p.bank && cur.p.accName && cur.amt >= 1) { info.textContent = "Pay " + fmt(cur.amt) + " to account " + cur.p.acct + ", " + cur.p.bank + ", " + cur.p.accName + "."; info.hidden = false; } else { info.hidden = true; }
+    okKey = ""; $("oBtn").textContent = "Make confirmation code"; hide($("oMsg"));
+    if (cur.w.length) { warn.textContent = cur.w.join("\n"); warn.hidden = false; } else { warn.hidden = true; }
+  }
+  $("oPaste").addEventListener("input", function () { oRefresh(true); });
+  $("oRef").addEventListener("input", function () { oRefresh(false); });
+  $("oAmt").addEventListener("input", function () { oRefresh(false); });
+  $("oBtn").addEventListener("click", function () {
+    var ref = clean($("oRef").value).toUpperCase(), amt = parseInt($("oAmt").value, 10), msg = $("oMsg");
+    if (!/^[A-Z0-9]{4,12}$/.test(ref)) { show(msg, "Enter the Ref from the withdrawal email.", "bad"); return; }
+    if (!(amt >= 1)) { show(msg, "Enter the amount you paid.", "bad"); return; }
+    var cur = oRead(), key = ref + "|" + amt;
+    if (cur.w.length && okKey !== key) { okKey = key; $("oBtn").textContent = "Make the code anyway"; show(msg, "Check the warning above. Tap again to make the code anyway.", "bad"); return; }
+    cur.p.ref = ref; recordPaid(cur.p, amt);
+    var code = "PAID-" + ref + "-" + amt + "-" + fnv("paid|" + ref + "|" + amt + "|" + CONFIG.ownerSecret).toUpperCase();
+    lastPaid = { amt: amt, code: code };
+    $("oCode").textContent = code; $("oResult").hidden = false; hide(msg); hide($("oWarn")); okKey = ""; $("oBtn").textContent = "Make confirmation code"; oStats(); renderOwner();
+  });
+  $("oShare").addEventListener("click", function () {
+    if (!lastPaid) return;
+    shareOrCopy("Your " + fmt(lastPaid.amt) + " has been paid. Confirmation code:\n" + lastPaid.code + "\nOpen the app, tap Withdraw, paste it under 'Got paid?' and tap Confirm payment.", $("oMsg"), $("oCode"));
+  });
+  $("oCopy").addEventListener("click", function () { var c = $("oCode").textContent; if (c) copyText(c, $("oMsg"), $("oCode")); });
+  window.addEventListener("hashchange", checkOwner);
+  checkOwner();
+
+  setMode("up");
+  route();
+  setInterval(function () { if (!$("appView").hidden) updateClaim(); }, 1000);
+  setInterval(function () { flush(false); }, 30000);
+  window.addEventListener("online", function () { flush(true); });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) flush(false); });
+  flush(false);
+})();
+</script>
+</body>
+</html>
